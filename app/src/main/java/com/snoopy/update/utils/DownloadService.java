@@ -40,6 +40,7 @@ public class DownloadService extends IntentService {
 
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoOutput(false);
+
             urlConnection.setConnectTimeout(10 * 1000);
             urlConnection.setReadTimeout(10 * 1000);
             urlConnection.setRequestProperty("Connection", "Keep-Alive");
