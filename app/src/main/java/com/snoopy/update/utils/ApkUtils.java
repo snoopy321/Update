@@ -27,7 +27,7 @@ public class ApkUtils {
 
     public static Intent getApkInStallIntent(Context context, File apkFile) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".update.provider", apkFile);
@@ -35,6 +35,7 @@ public class ApkUtils {
             intent.setDataAndType(uri, "application/vnd.android.package-archive");
         } else {
             Uri uri = getApkUri(apkFile);
+            Log.i("tbw","apkFileUri: " + apkFile);
             intent.setDataAndType(uri, "application/vnd.android.package-archive");
         }
         return intent;

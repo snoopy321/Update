@@ -88,6 +88,7 @@ class CheckUpdateTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... args) {
+        Log.i("tbw","url: " + url);
         return HttpUtils.get(url);
     }
 }

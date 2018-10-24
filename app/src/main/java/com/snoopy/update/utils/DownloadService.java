@@ -42,7 +42,7 @@ public class DownloadService extends IntentService {
             urlConnection.setDoOutput(false);
 
             urlConnection.setConnectTimeout(10 * 1000);
-            urlConnection.setReadTimeout(10 * 1000);
+            urlConnection.setReadTimeout(30 * 1000);
             urlConnection.setRequestProperty("Connection", "Keep-Alive");
             urlConnection.setRequestProperty("Charset", "UTF-8");
             urlConnection.setRequestProperty("Accept-Encoding", "gzip, deflate");
@@ -54,13 +54,11 @@ public class DownloadService extends IntentService {
             in = urlConnection.getInputStream();
             File dir = StorageUtils.getCacheDirectory(this);
             String apkName = urlStr.substring(urlStr.lastIndexOf("/") + 1, urlStr.length());
-            Log.i("tbw","apkName: " + apkName);
             File apkFile = new File(dir, apkName);
             out = new FileOutputStream(apkFile);
             byte[] buffer = new byte[BUFFER_SIZE];
 
             int oldProgress = 0;
-
             while ((byteread = in.read(buffer)) != -1) {
                 bytesum += byteread;
                 out.write(buffer, 0, byteread);
@@ -73,7 +71,6 @@ public class DownloadService extends IntentService {
                 oldProgress = progress;
             }
             // 下载完成
-
             ApkUtils.installAPk(this, apkFile);
 
             notificationHelper.cancel();
